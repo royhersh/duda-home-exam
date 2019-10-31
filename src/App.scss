@@ -1,39 +1,4 @@
-// body {
-//   font-size: 62.5%;
-// }
-// .App {
-//   font-size: 1.6em;
-// }
-// .header {
-//   background: #aabbcc;
-//   margin: 0;
-//   height: 6em;
-//   padding: 30px;
-//   text-align: center;
-// }
-
-// .main {
-//   display: flex;
-//   min-height: calc(100vh - 8em);
-//   & .left {
-//     flex: 1;
-//     background: lightpink;
-//     // min-height: 500px;
-//   }
-//   & .right {
-//     flex: 1;
-//     background: lightcyan;
-//   }
-// }
-
-// .footer {
-//   background: lightgreen;
-//   height: 2em;
-// }
-.header {
-  background: #aabbcc;
-  margin: 0;
-  // height: 6em;
-  // padding: 30px;
-  text-align: center;
+.container {
+  max-width: 640px;
 }
+@import './styles/components//header';

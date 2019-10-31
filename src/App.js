@@ -1,44 +1,61 @@
 import React from 'react';
 import './App.scss';
+import { connect } from 'react-redux';
+import * as actionCreators from './actions/index';
 
-import Button from '@material-ui/core/Button';
+import Header from './components/header';
+import CommentForm from './components/commentForm';
+import Comment from './components/comment';
 
-function App() {
-  return (
-    <div className="container">
-      <div className="row">
-        <div className="col s12">
-          <header className="header">
-            <h1>Header</h1>
-          </header>
-        </div>
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.handleAddComment = this.handleAddComment.bind(this);
+    this.renderComments = this.renderComments.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+  }
+
+  handleAddComment(username, comment) {
+    this.props.addComment(username, comment);
+  }
+
+  handleDelete(index) {
+    this.props.deleteComment(index);
+  }
+
+  renderComments() {
+    const { comments } = this.props;
+    if (comments.length === 0) return null;
+
+    return comments.map((comment, index) => (
+      <Comment
+        key={comment.username + comment.comment}
+        index={index}
+        onDelete={this.handleDelete}
+        username={comment.username}
+        comment={comment.comment}
+        avatar={comment.avatarURL}
+      />
+    ));
+  }
+
+  render() {
+    return (
+      <div className="container">
+        <Header />
+        {this.renderComments()}
+        <CommentForm btnCaption="add" btnCallback={this.handleAddComment} />
       </div>
-    </div>
-  );
-  return (
-    <React.Fragment>
-      <div className="App">
-        <header className="header">
-          <h1>Header</h1>
-        </header>
-
-        <main className="main">
-          <section className="left">
-            <Button color="primary" variant="contained">
-              Hello
-            </Button>
-          </section>
-          <section className="right">
-            <Button>Hello</Button>
-          </section>
-        </main>
-
-        <footer className="footer">
-          <p>Footer</p>
-        </footer>
-      </div>
-    </React.Fragment>
-  );
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  comments: state.comments
+});
+
+export default connect(
+  mapStateToProps,
+  actionCreators
+)(App);
